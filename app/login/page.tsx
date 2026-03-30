@@ -4,7 +4,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const metadata = {
   title: "Masuk - SPMB",
-  description: "Masuk ke akun SPMB Anda.",
+  description: "Autentikasi akun SPMB Anda.",
 };
 
 export default function LoginPage() {
@@ -17,7 +17,7 @@ export default function LoginPage() {
       <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-10">
         <Link
           href="/"
-          className="text-2xl font-bold tracking-tighter text-blue-600 dark:text-blue-500 transition-transform hover:scale-105"
+          className="text-2xl font-bold tracking-tight text-blue-600 dark:text-blue-500 transition-colors"
         >
           SPMB.
         </Link>

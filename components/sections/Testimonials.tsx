@@ -1,81 +1,97 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Star } from "lucide-react";
 
 const testimonials = [
   {
     name: "Ahmad Rizky",
-    role: "Mahasiswa Teknik Informatika",
-    content: "Sistem pendaftarannya sangat mudah dipahami. Saya bisa memantau status kelulusan secara real-time tanpa harus bingung bertanya ke sana kemari.",
+    role: "Siswa TKJ — SMKN 1 Bengkulu",
+    content:
+      "Proses pendaftaran sangat terstruktur dan mudah dipahami. Saya bisa melacak status seleksi secara langsung tanpa harus datang ke sekolah.",
     avatar: "https://i.pravatar.cc/150?u=ahmad",
   },
   {
     name: "Siti Nurhaliza",
-    role: "Mahasiswi Sistem Informasi",
-    content: "Alur registrasinya jelas, dan pilihan jurusannya lengkap. Panduan di website ini sangat membantuku menentukan pilihan masa depanku.",
+    role: "Siswi Akuntansi — SMKN 3 Bengkulu",
+    content:
+      "Informasi kompetensi keahlian dan prosedur seleksi disajikan dengan sangat jelas. Sangat membantu saya dalam menentukan pilihan program.",
     avatar: "https://i.pravatar.cc/150?u=siti",
   },
   {
     name: "Budi Santoso",
-    role: "Mahasiswa Teknik Komputer",
-    content: "Tampilan websitenya sangat modern dan responsif meski dibuka dari HP. Pengalaman pendaftaran mahasiswa baru jadi tidak membosankan.",
+    role: "Siswa TKR — SMKN 2 Rejang Lebong",
+    content:
+      "Antarmuka pendaftaran sangat intuitif dan profesional. Seluruh proses registrasi saya berjalan lancar tanpa kendala teknis apa pun.",
     avatar: "https://i.pravatar.cc/150?u=budi",
   },
 ];
 
 export function Testimonials() {
   return (
-    <section className="py-20 lg:py-32 bg-white dark:bg-black overflow-hidden relative">
-      {/* Decorative background element */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-blue-50 dark:bg-blue-900/10 rounded-full blur-3xl opacity-50 -z-10" />
+    <section className="py-24 bg-gray-50 dark:bg-gray-900/50 relative overflow-hidden">
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent dark:via-gray-800" />
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+      <div className="container mx-auto px-6 md:px-8 max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto space-y-4 mb-16"
+        >
+          <p className="text-sm font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+            Testimoni
+          </p>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-gray-900 dark:text-white">
             Apa Kata Mereka?
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            Dengarkan langsung pengalaman dari mahasiswa yang telah berhasil mendaftar melalui sistem kami.
+          <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
+            Pengalaman langsung dari siswa yang telah berhasil mendaftar melalui
+            sistem SPMB.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {testimonials.map((testimonial, index) => (
-             <motion.div
-               initial={{ opacity: 0, y: 20 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true, margin: "-100px" }}
-               transition={{ duration: 0.5, delay: index * 0.1 }}
-               key={index}
-               className="flex flex-col rounded-3xl bg-gray-50 p-8 shadow-sm ring-1 ring-gray-100 dark:bg-gray-900/50 dark:ring-gray-800"
-             >
-               <div className="mb-6 flex space-x-1 text-yellow-400">
-                  {/* 5 stars */}
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-               </div>
-               
-               <p className="flex-1 text-gray-700 dark:text-gray-300 italic mb-8 relative">
-                 <span className="text-4xl absolute -top-4 -left-2 text-gray-300 dark:text-gray-700 font-serif leading-none">&quot;</span>
-                 {testimonial.content}
-               </p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              key={index}
+              className="flex flex-col rounded-2xl bg-white dark:bg-gray-900 p-7 border border-gray-100 dark:border-gray-800 transition-all duration-300 hover:shadow-lg hover:shadow-gray-200/50 dark:hover:shadow-none hover:border-gray-200 dark:hover:border-gray-700"
+            >
+              <div className="mb-5 flex space-x-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className="w-4 h-4 fill-amber-400 text-amber-400"
+                  />
+                ))}
+              </div>
 
-               <div className="flex items-center gap-4 mt-auto">
-                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                 <img
-                   src={testimonial.avatar}
-                   alt={testimonial.name}
-                   className="h-12 w-12 rounded-full object-cover ring-2 ring-white dark:ring-gray-800"
-                 />
-                 <div>
-                   <h4 className="font-semibold text-gray-900 dark:text-gray-100">{testimonial.name}</h4>
-                   <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</p>
-                 </div>
-               </div>
-             </motion.div>
+              <p className="flex-1 text-gray-600 dark:text-gray-400 leading-relaxed text-sm mb-7">
+                &ldquo;{testimonial.content}&rdquo;
+              </p>
+
+              <div className="flex items-center gap-3 pt-5 border-t border-gray-100 dark:border-gray-800">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={testimonial.avatar}
+                  alt={testimonial.name}
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+                <div>
+                  <h4 className="font-semibold text-sm text-gray-900 dark:text-gray-100">
+                    {testimonial.name}
+                  </h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                    {testimonial.role}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>

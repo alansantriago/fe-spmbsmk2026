@@ -42,7 +42,7 @@ export function LoginForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-md bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-2xl shadow-blue-900/10 ring-1 ring-gray-100 dark:ring-gray-800"
+      className="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-xl ring-1 ring-gray-100 dark:ring-gray-800"
     >
       <div className="text-center space-y-2 mb-8">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -90,7 +90,7 @@ export function LoginForm() {
               href="/forgot-password"
               className="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
             >
-              Lupa password?
+              Lupa kata sandi?
             </Link>
           </div>
           <div className="mt-2 relative text-gray-900">

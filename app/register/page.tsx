@@ -4,7 +4,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const metadata = {
   title: "Daftar - SPMB",
-  description: "Buat akun baru SPMB Anda.",
+  description: "Registrasi akun calon mahasiswa baru.",
 };
 
 export default function RegisterPage() {
@@ -17,7 +17,7 @@ export default function RegisterPage() {
       <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-10">
         <Link
           href="/"
-          className="text-2xl font-bold tracking-tighter text-blue-600 dark:text-blue-500 transition-transform hover:scale-105"
+          className="text-2xl font-bold tracking-tight text-blue-600 dark:text-blue-500 transition-colors"
         >
           SPMB.
         </Link>

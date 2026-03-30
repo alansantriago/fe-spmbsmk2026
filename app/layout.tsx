@@ -1,21 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "SPMB - Sistem Penerimaan Mahasiswa Baru",
-  description: "Wujudkan masa depanmu bersama kami melalui sistem pendaftaran yang cepat, mudah, dan transparan.",
+  title: "SPMB SMK Provinsi Bengkulu — Penerimaan Peserta Didik Baru 2026",
+  description: "Sistem penerimaan peserta didik baru SMK Provinsi Bengkulu. Portal pendaftaran resmi yang cepat, transparan, dan terintegrasi.",
 };
 
 export default function RootLayout({
@@ -27,7 +22,7 @@ export default function RootLayout({
     <html
       lang="id"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${jakarta.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ThemeProvider

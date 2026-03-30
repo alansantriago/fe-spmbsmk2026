@@ -6,51 +6,44 @@ import { ArrowRight } from "lucide-react";
 
 export function Cta() {
   return (
-    <section className="relative overflow-hidden py-24 bg-blue-600 dark:bg-blue-900">
-      {/* Abstract Background Element */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden leading-none z-0 mix-blend-overlay opacity-30">
-        <svg fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none" className="absolute top-0 w-full h-full">
-          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
-        </svg>
-      </div>
+    <section className="py-24 bg-gray-50 dark:bg-gray-900/50 relative overflow-hidden">
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent dark:via-gray-800" />
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="flex flex-col items-center text-center space-y-8 max-w-3xl mx-auto">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl font-bold tracking-tight sm:text-4xl text-white"
-          >
-            Siap Memulai Perjalananmu?
-          </motion.h2>
+      <div className="container mx-auto px-6 md:px-8 max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700 px-8 py-16 md:py-20 text-center shadow-2xl shadow-blue-900/20 dark:shadow-blue-900/40"
+        >
+          {/* Decorative elements */}
+          <div className="absolute top-0 left-0 w-72 h-72 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.04),transparent)]" />
 
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-lg text-blue-100 max-w-[600px]"
-          >
-            Bergabunglah bersama ribuan mahasiswa lainnya dan jadilah bagian dari agen perubahan untuk masa depan bangsa.
-          </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="pt-4"
-          >
-            <Link
-              href="/register"
-              className="inline-flex h-12 md:h-14 items-center justify-center rounded-full bg-white px-8 md:px-10 text-base font-bold text-blue-600 shadow-xl shadow-blue-900/20 transition-all hover:bg-gray-50 hover:scale-105 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white"
-            >
-              Daftar Sekarang
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </motion.div>
-        </div>
+          <div className="relative z-10 flex flex-col items-center max-w-2xl mx-auto space-y-6">
+            <p className="text-sm font-semibold uppercase tracking-widest text-blue-200">
+              Jangan Lewatkan Kesempatan Ini
+            </p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+              Siap Bergabung?
+            </h2>
+            <p className="text-base md:text-lg text-blue-100/80 leading-relaxed max-w-lg mx-auto">
+              Daftarkan diri Anda sekarang dan jadilah bagian dari
+              generasi unggul SMK Provinsi Bengkulu tahun ajaran 2026.
+            </p>
+            <div className="pt-4">
+              <Link
+                href="/register"
+                className="group inline-flex h-12 items-center justify-center rounded-lg bg-white px-8 text-sm font-semibold text-blue-700 shadow-lg transition-all hover:bg-blue-50 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/30"
+              >
+                Mulai Pendaftaran
+                <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -3,6 +3,7 @@ import { Hero } from "@/components/sections/Hero";
 import { Features } from "@/components/sections/Features";
 import { Steps } from "@/components/sections/Steps";
 import { Programs } from "@/components/sections/Programs";
+import { Stats } from "@/components/sections/Stats";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Faq } from "@/components/sections/Faq";
 import { Cta } from "@/components/sections/Cta";
@@ -17,6 +18,7 @@ export default function Home() {
         <Features />
         <Steps />
         <Programs />
+        <Stats />
         <Testimonials />
         <Faq />
         <Cta />
