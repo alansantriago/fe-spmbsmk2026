@@ -1,17 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useSession, signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Users,
   FileText,
   GraduationCap,
-  Settings,
   BarChart3,
   Bell,
-  LogOut,
   ChevronLeft,
   Menu,
 } from "lucide-react";
@@ -25,10 +22,6 @@ const navItems = [
   { label: "Notifikasi", href: "/admin/notifikasi", icon: Bell },
 ];
 
-const bottomItems = [
-  { label: "Pengaturan", href: "/admin/pengaturan", icon: Settings },
-];
-
 interface SidebarProps {
   collapsed: boolean;
   onToggle: () => void;
@@ -36,48 +29,29 @@ interface SidebarProps {
 
 export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const pathname = usePathname();
-  const router = useRouter();
-  const { data: session } = useSession();
-
-  const handleLogout = async () => {
-    try {
-      if (session?.accessToken) {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
-        await fetch(`${apiUrl}/auth/logout`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${session.accessToken}`,
-          },
-        }).catch(() => {});
-      }
-    } catch {}
-    await signOut({ redirect: false });
-    router.push("/login");
-  };
 
   return (
     <aside
-      className={`fixed top-0 left-0 z-40 h-screen flex flex-col bg-white dark:bg-gray-950 border-r border-gray-100 dark:border-gray-800 transition-all duration-300 ${
-        collapsed ? "w-[72px]" : "w-64"
-      } hidden lg:flex`}
+      className={`fixed top-0 left-0 z-40 h-screen flex flex-col bg-white dark:bg-gray-950 border-r border-gray-100 dark:border-gray-800 transition-all duration-300 ${collapsed ? "w-[72px]" : "w-64"
+        } hidden lg:flex`}
     >
-      {/* Logo */}
+      {/* Logo Section - Text Only, No PNG */}
       <div className="h-16 flex items-center justify-between px-5 border-b border-gray-100 dark:border-gray-800 flex-shrink-0">
         {!collapsed && (
-          <Link href="/admin" className="flex items-center gap-2">
-            <span className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+          <Link href="/admin" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
+               <span className="text-white font-black text-lg italic leading-none">S</span>
+            </div>
+            <span className="text-lg font-black tracking-tight text-gray-900 dark:text-white uppercase">
               SPMB
-            </span>
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-blue-600 bg-blue-50 dark:bg-blue-900/30 dark:text-blue-400 px-2 py-0.5 rounded-md">
-              Admin
             </span>
           </Link>
         )}
         {collapsed && (
-          <Link href="/admin" className="mx-auto">
-            <span className="text-lg font-bold tracking-tight text-blue-600">S</span>
+          <Link href="/admin" className="mx-auto group">
+            <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:rotate-6 transition-transform">
+               <span className="text-white font-black text-xl italic leading-none">S</span>
+            </div>
           </Link>
         )}
         <button
@@ -89,9 +63,9 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       </div>
 
       {/* Nav Items */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+      <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
         {!collapsed && (
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 px-3 mb-3">
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-600 px-3 mb-4">
             Menu Utama
           </p>
         )}
@@ -102,50 +76,25 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group ${
-                isActive
-                  ? "bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-gray-200"
-              } ${collapsed ? "justify-center px-0" : ""}`}
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-bold transition-all duration-300 group ${isActive
+                  ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
+                  : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-200"
+                } ${collapsed ? "justify-center px-0 h-12 w-12 mx-auto" : ""}`}
               title={collapsed ? item.label : undefined}
             >
-              <Icon className={`w-[18px] h-[18px] flex-shrink-0 ${isActive ? "text-blue-600 dark:text-blue-400" : "text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300"}`} />
-              {!collapsed && <span>{item.label}</span>}
+              <Icon className={`w-[18px] h-[18px] flex-shrink-0 transition-transform ${collapsed ? "" : "group-hover:scale-110"} ${isActive ? "text-white" : "text-gray-400 dark:text-gray-600 group-hover:text-blue-600"}`} />
+              {!collapsed && <span className="tracking-tight">{item.label}</span>}
             </Link>
           );
         })}
       </nav>
 
-      {/* Bottom */}
-      <div className="border-t border-gray-100 dark:border-gray-800 py-4 px-3 space-y-1 flex-shrink-0">
-        {bottomItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname === item.href;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group ${
-                isActive
-                  ? "bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-gray-200"
-              } ${collapsed ? "justify-center px-0" : ""}`}
-              title={collapsed ? item.label : undefined}
-            >
-              <Icon className="w-[18px] h-[18px] flex-shrink-0 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
-              {!collapsed && <span>{item.label}</span>}
-            </Link>
-          );
-        })}
-        <button
-          onClick={handleLogout}
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group w-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 ${collapsed ? "justify-center px-0" : ""}`}
-          title={collapsed ? "Keluar" : undefined}
-        >
-          <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
-          {!collapsed && <span>Keluar</span>}
-        </button>
-      </div>
+      {/* Footer info - Minimalist */}
+      {!collapsed && (
+        <div className="p-6 border-t border-gray-100 dark:border-gray-800">
+           <p className="text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase tracking-widest text-center">Admin Portal v1.0</p>
+        </div>
+      )}
     </aside>
   );
 }
