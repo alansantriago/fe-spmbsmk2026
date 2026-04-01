@@ -46,8 +46,16 @@ export function LoginForm() {
       });
 
       if (result?.error) {
-        // NextAuth passes the error message from authorize()
-        setApiError(result.error);
+        // Map Auth.js error codes to user-friendly messages
+        const errorMap: Record<string, string> = {
+          CredentialsSignin: "Email atau password salah!",
+          Configuration: "Terjadi masalah pada server autentikasi.",
+          AccessDenied: "Akses ditolak. Pastikan email Anda sudah terverifikasi.",
+          default: "Gagal masuk. Silakan coba lagi nanti.",
+        };
+
+        const errorMessage = errorMap[result.error] || errorMap.default;
+        setApiError(errorMessage);
         setIsSubmitting(false);
         return;
       }

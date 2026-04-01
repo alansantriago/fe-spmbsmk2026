@@ -60,7 +60,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const loginRes = await loginApi(email, password);
 
         if (!loginRes.success || !loginRes.data) {
-          throw new Error(loginRes.message || "Email atau password salah!");
+          // Returning null is the standard way to trigger CredentialsSignin in Auth.js
+          return null;
         }
 
         const { access_token, expires_in } = loginRes.data;
