@@ -4,9 +4,11 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { motion } from "framer-motion";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Eye, EyeOff, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const loginSchema = z.object({
   email: z.string().min(1, { message: "Email harus diisi" }).email({ message: "Format email tidak valid" }),
@@ -16,8 +18,11 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [apiError, setApiError] = React.useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = React.useState<string | null>(null);
 
   const {
     register,
@@ -30,11 +35,34 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormValues) => {
     setIsSubmitting(true);
-    // Simulate API Call to Supabase / Backend auth
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log("Login Data:", data);
-    setIsSubmitting(false);
-    // Typically redirect user here
+    setApiError(null);
+    setSuccessMessage(null);
+
+    try {
+      const result = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false, // We handle redirect manually
+      });
+
+      if (result?.error) {
+        // NextAuth passes the error message from authorize()
+        setApiError(result.error);
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (result?.ok) {
+        setSuccessMessage("Login berhasil! Mengalihkan ke dashboard...");
+        // Short delay so user sees the success message, then refresh to trigger middleware redirect
+        await new Promise((resolve) => setTimeout(resolve, 600));
+        router.refresh();
+        router.push("/login"); // Middleware will catch this and redirect to correct dashboard
+      }
+    } catch {
+      setApiError("Tidak dapat terhubung ke server. Pastikan server backend aktif.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -53,6 +81,45 @@ export function LoginForm() {
         </p>
       </div>
 
+      {/* API Error Alert */}
+      <AnimatePresence>
+        {apiError && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: "auto" }}
+            exit={{ opacity: 0, y: -10, height: 0 }}
+            className="mb-6 flex items-start gap-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 px-4 py-3"
+          >
+            <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-medium text-red-800 dark:text-red-300">
+                Autentikasi Gagal
+              </p>
+              <p className="text-xs text-red-600 dark:text-red-400 mt-0.5">
+                {apiError}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Success Alert */}
+      <AnimatePresence>
+        {successMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: "auto" }}
+            exit={{ opacity: 0, y: -10, height: 0 }}
+            className="mb-6 flex items-start gap-3 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/50 px-4 py-3"
+          >
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+            <p className="text-sm font-medium text-emerald-800 dark:text-emerald-300">
+              {successMessage}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Email Field */}
         <div>
@@ -63,9 +130,11 @@ export function LoginForm() {
             <input
               type="email"
               placeholder="nama@email.com"
+              autoComplete="email"
+              disabled={isSubmitting}
               className={`block w-full rounded-xl border-0 py-3 px-4 shadow-sm ring-1 ring-inset ${
                 errors.email ? "ring-red-500 focus:ring-red-500" : "ring-gray-300 dark:ring-gray-700 focus:ring-blue-600"
-              } focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-100 transition-colors`}
+              } focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
               {...register("email")}
             />
             {errors.email && (
@@ -97,9 +166,11 @@ export function LoginForm() {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="••••••••"
+              autoComplete="current-password"
+              disabled={isSubmitting}
               className={`block w-full rounded-xl border-0 py-3 pl-4 pr-12 shadow-sm ring-1 ring-inset ${
                 errors.password ? "ring-red-500 focus:ring-red-500" : "ring-gray-300 dark:ring-gray-700 focus:ring-blue-600"
-              } focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-100 transition-colors`}
+              } focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
               {...register("password")}
             />
             <button
@@ -107,6 +178,7 @@ export function LoginForm() {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
               aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
+              tabIndex={-1}
             >
               {showPassword ? (
                 <EyeOff className="h-5 w-5" aria-hidden="true" />
@@ -136,7 +208,7 @@ export function LoginForm() {
             {isSubmitting ? (
               <>
                 <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5" />
-                Masuk...
+                Memproses...
               </>
             ) : (
               "Masuk"
@@ -145,48 +217,10 @@ export function LoginForm() {
         </div>
       </form>
 
-      {/* Divider */}
-      <div className="mt-8 relative">
-        <div className="absolute inset-0 flex items-center" aria-hidden="true">
-          <div className="w-full border-t border-gray-200 dark:border-gray-800" />
-        </div>
-        <div className="relative flex justify-center text-sm font-medium leading-6">
-          <span className="bg-white dark:bg-gray-900 px-4 text-gray-500 dark:text-gray-400">atau</span>
-        </div>
-      </div>
-
-      {/* Google Login Button */}
-      <div className="mt-6">
-        <button
-          type="button"
-          className="flex w-full items-center justify-center gap-3 rounded-xl bg-white dark:bg-gray-950 px-4 py-3.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 focus-visible:ring-transparent transition-all"
-        >
-          <svg className="h-5 w-5" viewBox="0 0 24 24">
-            <path
-              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-              fill="#4285F4"
-            />
-            <path
-              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-              fill="#34A853"
-            />
-            <path
-              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-              fill="#FBBC05"
-            />
-            <path
-              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-              fill="#EA4335"
-            />
-          </svg>
-          Masuk dengan Google
-        </button>
-      </div>
-
       <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
         Belum punya akun?{" "}
         <Link
-          href="/#register"
+          href="/register"
           className="font-semibold text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
         >
           Daftar

@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 import {
   LayoutDashboard,
   Users,
@@ -35,6 +36,26 @@ interface SidebarProps {
 
 export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  const handleLogout = async () => {
+    try {
+      if (session?.accessToken) {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+        await fetch(`${apiUrl}/auth/logout`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${session.accessToken}`,
+          },
+        }).catch(() => {});
+      }
+    } catch {}
+    await signOut({ redirect: false });
+    router.push("/login");
+  };
 
   return (
     <aside
@@ -117,6 +138,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           );
         })}
         <button
+          onClick={handleLogout}
           className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group w-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 ${collapsed ? "justify-center px-0" : ""}`}
           title={collapsed ? "Keluar" : undefined}
         >
