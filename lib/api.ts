@@ -147,3 +147,35 @@ export async function verifyEmailApi(
   });
   return res.json();
 }
+
+/**
+ * POST /auth/forgot-password
+ */
+export async function forgotPasswordApi(
+  email: string
+): Promise<ApiResponse<null>> {
+  const res = await fetch(`${API_URL}/auth/forgot-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({ email }),
+  });
+  return res.json();
+}
+
+/**
+ * POST /auth/reset-password
+ */
+export async function resetPasswordApi(body: {
+  token: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}): Promise<ApiResponse<any>> {
+  const res = await fetch(`${API_URL}/auth/reset-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(body),
+  });
+  return res.json();
+}
+
