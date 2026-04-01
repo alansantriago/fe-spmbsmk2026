@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   description: "Sistem penerimaan peserta didik baru SMK Provinsi Bengkulu. Portal pendaftaran resmi yang cepat, transparan, dan terintegrasi.",
 };
 
+import { Providers } from "@/components/Providers";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,14 +27,9 @@ export default function RootLayout({
       className={`${jakarta.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           {children}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
