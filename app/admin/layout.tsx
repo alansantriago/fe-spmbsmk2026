@@ -23,7 +23,10 @@ export default function AdminLayout({
             collapsed ? "lg:pl-[72px]" : "lg:pl-64"
           }`}
         >
-          <Header />
+          <Header 
+            collapsed={collapsed} 
+            onToggle={() => setCollapsed(!collapsed)} 
+          />
           <main className="p-6">{children}</main>
         </div>
       </div>

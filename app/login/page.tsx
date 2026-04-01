@@ -1,5 +1,6 @@
 import { LoginForm } from "@/components/LoginForm";
 import Link from "next/link";
+import Image from "next/image";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const metadata = {
@@ -15,11 +16,22 @@ export default function LoginPage() {
 
       {/* Top Navigation for Theme Toggle & Back to Home */}
       <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-10">
-        <Link
-          href="/"
-          className="text-2xl font-bold tracking-tight text-blue-600 dark:text-blue-500 transition-colors"
-        >
-          SPMB.
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <Image
+            src="/images/logo-spmb.png"
+            alt="Logo SPMB"
+            width={32}
+            height={32}
+            className="w-8 h-8 object-contain"
+          />
+          <div className="flex flex-col">
+            <span className="text-xl font-black tracking-tighter text-blue-600 dark:text-blue-500 uppercase leading-none">
+              SPMB SMK
+            </span>
+            <span className="text-[9px] font-bold text-blue-600 dark:text-blue-500/80 uppercase tracking-widest mt-0.5 leading-none">
+              Provinsi Bengkulu
+            </span>
+          </div>
         </Link>
         <ThemeToggle />
       </div>

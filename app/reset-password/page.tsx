@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -198,9 +199,8 @@ function ResetPasswordFormContent() {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Minimal 8 karakter"
-                className={`block w-full rounded-xl border-0 py-3 pl-11 pr-12 shadow-sm ring-1 ring-inset ${
-                  errors.password ? "ring-red-500 focus:ring-red-500" : "ring-gray-300 dark:ring-gray-700 focus:ring-blue-600"
-                } focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-100 transition-all`}
+                className={`block w-full rounded-xl border-0 py-3 pl-11 pr-12 shadow-sm ring-1 ring-inset ${errors.password ? "ring-red-500 focus:ring-red-500" : "ring-gray-300 dark:ring-gray-700 focus:ring-blue-600"
+                  } focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-100 transition-all`}
                 {...register("password")}
               />
               <Lock className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
@@ -220,9 +220,8 @@ function ResetPasswordFormContent() {
                   {[...Array(4)].map((_, i) => (
                     <div
                       key={i}
-                      className={`flex-1 transition-all duration-300 ${
-                        i < strengthScore ? strengthColors[strengthScore] : "bg-transparent"
-                      }`}
+                      className={`flex-1 transition-all duration-300 ${i < strengthScore ? strengthColors[strengthScore] : "bg-transparent"
+                        }`}
                     />
                   ))}
                 </div>
@@ -245,9 +244,8 @@ function ResetPasswordFormContent() {
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="Ulangi kata sandi baru"
-                className={`block w-full rounded-xl border-0 py-3 pl-11 pr-12 shadow-sm ring-1 ring-inset ${
-                  errors.password_confirmation ? "ring-red-500 focus:ring-red-500" : "ring-gray-300 dark:ring-gray-700 focus:ring-blue-600"
-                } focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-100 transition-all`}
+                className={`block w-full rounded-xl border-0 py-3 pl-11 pr-12 shadow-sm ring-1 ring-inset ${errors.password_confirmation ? "ring-red-500 focus:ring-red-500" : "ring-gray-300 dark:ring-gray-700 focus:ring-blue-600"
+                  } focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-gray-100 transition-all`}
                 {...register("password_confirmation")}
               />
               <Lock className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
@@ -292,8 +290,24 @@ export default function ResetPasswordPage() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(37,99,235,0.15),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(37,99,235,0.15),rgba(0,0,0,0))]" />
 
       {/* Top Navigation */}
-      <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-10 font-bold tracking-tight text-blue-600 dark:text-blue-500">
-        <Link href="/">SPMB.</Link>
+      <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-10">
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <Image
+            src="/images/logo-spmb.png"
+            alt="Logo SPMB"
+            width={32}
+            height={32}
+            className="w-8 h-8 object-contain"
+          />
+          <div className="flex flex-col">
+            <span className="text-xl font-black tracking-tighter text-blue-600 dark:text-blue-500 uppercase leading-none">
+              SPMB SMK
+            </span>
+            <span className="text-[9px] font-bold text-blue-600 dark:text-blue-500/80 uppercase tracking-widest mt-0.5 leading-none">
+              Provinsi Bengkulu
+            </span>
+          </div>
+        </Link>
         <ThemeToggle />
       </div>
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 export function Footer() {
@@ -9,16 +10,25 @@ export function Footer() {
       <div className="container mx-auto px-6 md:px-8 max-w-6xl">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 mb-14">
           {/* Brand Info */}
-          <div className="lg:col-span-1 space-y-5">
-            <Link href="/" className="inline-block">
-              <span className="text-xl font-bold tracking-tight text-white">
-                SPMB
-              </span>
-              <span className="text-xl font-bold tracking-tight text-blue-500">
-                .
-              </span>
+          <div className="lg:col-span-1 space-y-6">
+            <Link href="/" className="flex items-center gap-3 group">
+              <Image
+                src="/images/logo-spmb.png"
+                alt="Logo SPMB"
+                width={48}
+                height={48}
+                className="w-12 h-12 object-contain transition-transform group-hover:scale-105"
+              />
+              <div className="flex flex-col">
+                <span className="text-xl font-black tracking-tighter text-white leading-none uppercase">
+                  SPMB SMK
+                </span>
+                <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mt-0.5 leading-none">
+                  Provinsi Bengkulu
+                </span>
+              </div>
             </Link>
-            <p className="text-sm leading-relaxed">
+            <p className="text-xs leading-relaxed text-gray-500">
               Sistem Penerimaan Peserta Didik Baru SMK Provinsi Bengkulu —
               portal pendaftaran resmi yang cepat, transparan, dan terintegrasi.
             </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Search, Moon, Sun, LogOut, Loader2, Settings, User, ChevronDown } from "lucide-react";
+import { Bell, Search, Moon, Sun, LogOut, Loader2, Settings, User, ChevronDown, Menu } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";
 import { useState, useRef, useEffect } from "react";
@@ -8,13 +8,24 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function Header() {
+interface HeaderProps {
+  collapsed: boolean;
+  onToggle: () => void;
+}
+
+export function Header({ collapsed, onToggle }: HeaderProps) {
   const { setTheme, theme } = useTheme();
   const { data: session } = useSession();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Set mounted
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -69,8 +80,16 @@ export function Header() {
 
   return (
     <header className="h-16 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 flex items-center justify-between px-6 sticky top-0 z-30">
-      {/* Left: Page context - Styled like the main navigation */}
+      {/* Left: Toggle & Page context */}
       <div className="flex items-center gap-4">
+        <button
+          onClick={onToggle}
+          className="p-2 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-500 hover:text-blue-600 transition-all active:scale-95 group"
+          title={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+        >
+          <Menu className={`w-4 h-4 transition-transform duration-500 ${collapsed ? "" : "rotate-180"}`} />
+        </button>
+
         <div className="space-y-0.5">
           <h1 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider">
             Overview
@@ -101,7 +120,11 @@ export function Header() {
             className="p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900 text-gray-500 dark:text-gray-400 transition-all active:scale-95"
             title="Switch Theme"
           >
-            {theme === "light" ? <Moon className="h-[18px] w-[18px]" /> : <Sun className="h-[18px] w-[18px]" />}
+            {mounted ? (
+              theme === "light" ? <Moon className="h-[18px] w-[18px]" /> : <Sun className="h-[18px] w-[18px]" />
+            ) : (
+              <div className="h-[18px] w-[18px]" /> // Placeholder during hydration
+            )}
           </button>
 
           {/* Notifications */}

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -9,8 +10,6 @@ import {
   GraduationCap,
   BarChart3,
   Bell,
-  ChevronLeft,
-  Menu,
 } from "lucide-react";
 
 const navItems = [
@@ -35,31 +34,38 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       className={`fixed top-0 left-0 z-40 h-screen flex flex-col bg-white dark:bg-gray-950 border-r border-gray-100 dark:border-gray-800 transition-all duration-300 ${collapsed ? "w-[72px]" : "w-64"
         } hidden lg:flex`}
     >
-      {/* Logo Section - Text Only, No PNG */}
-      <div className="h-16 flex items-center justify-between px-5 border-b border-gray-100 dark:border-gray-800 flex-shrink-0">
+      {/* Logo Section - Official Branding */}
+      <div className="h-16 flex items-center px-5 border-b border-gray-100 dark:border-gray-800 flex-shrink-0">
         {!collapsed && (
-          <Link href="/admin" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
-               <span className="text-white font-black text-lg italic leading-none">S</span>
+          <Link href="/admin" className="flex items-center gap-3 group">
+            <Image
+              src="/images/logo-spmb.png"
+              alt="Logo SPMB"
+              width={32}
+              height={32}
+              className="w-8 h-8 object-contain transition-transform group-hover:scale-110"
+            />
+            <div className="flex flex-col">
+              <span className="text-base font-black tracking-tighter text-gray-900 dark:text-white leading-none uppercase">
+                SPMB SMK
+              </span>
+              <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mt-0.5 leading-none">
+                Provinsi Bengkulu
+              </span>
             </div>
-            <span className="text-lg font-black tracking-tight text-gray-900 dark:text-white uppercase">
-              SPMB
-            </span>
           </Link>
         )}
         {collapsed && (
           <Link href="/admin" className="mx-auto group">
-            <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:rotate-6 transition-transform">
-               <span className="text-white font-black text-xl italic leading-none">S</span>
-            </div>
+            <Image
+              src="/images/logo-spmb.png"
+              alt="Logo SPMB"
+              width={36}
+              height={36}
+              className="w-9 h-9 object-contain transition-transform group-hover:rotate-6"
+            />
           </Link>
         )}
-        <button
-          onClick={onToggle}
-          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 transition-colors hidden lg:flex"
-        >
-          {collapsed ? <Menu className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-        </button>
       </div>
 
       {/* Nav Items */}
@@ -77,8 +83,8 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
               key={item.href}
               href={item.href}
               className={`flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-bold transition-all duration-300 group ${isActive
-                  ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
-                  : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-200"
+                ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
+                : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-200"
                 } ${collapsed ? "justify-center px-0 h-12 w-12 mx-auto" : ""}`}
               title={collapsed ? item.label : undefined}
             >
@@ -92,7 +98,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       {/* Footer info - Minimalist */}
       {!collapsed && (
         <div className="p-6 border-t border-gray-100 dark:border-gray-800">
-           <p className="text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase tracking-widest text-center">Admin Portal v1.0</p>
+          <p className="text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase tracking-widest text-center">Admin Portal v1.0</p>
         </div>
       )}
     </aside>

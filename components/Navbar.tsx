@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -43,21 +44,29 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm border-b border-gray-100 dark:border-gray-800 py-3"
           : "bg-transparent py-5"
-      }`}
+        }`}
     >
       <div className="container mx-auto px-6 md:px-8 max-w-6xl w-full">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
-              <span className="text-white font-black text-xl italic leading-none">S</span>
+          <Link href="/" className="flex items-center gap-3 group">
+            <Image
+              src="/images/logo-spmb.png"
+              alt="Logo SPMB"
+              width={40}
+              height={40}
+              className="w-10 h-10 object-contain transition-transform group-hover:scale-105"
+            />
+            <div className="flex flex-col">
+              <span className="text-xl font-black tracking-tighter text-gray-900 dark:text-white leading-none uppercase">
+                SPMB SMK
+              </span>
+              <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mt-0.5 leading-none">
+                Provinsi Bengkulu
+              </span>
             </div>
-            <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              SPMB.
-            </span>
           </Link>
 
           {/* Desktop Nav */}
@@ -69,11 +78,10 @@ export function Navbar() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
-                        isActive
+                      className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${isActive
                           ? "bg-white dark:bg-gray-900 text-blue-600 dark:text-blue-400 shadow-sm"
                           : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                      }`}
+                        }`}
                     >
                       {link.label}
                     </Link>
@@ -112,7 +120,7 @@ export function Navbar() {
 
                   {/* Profile Dropdown */}
                   {isProfileOpen && (
-                    <div 
+                    <div
                       className="absolute right-0 mt-3 w-56 rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-2xl shadow-blue-500/10 p-2 transform origin-top-right transition-all"
                       onClick={(e) => e.stopPropagation()}
                     >
@@ -120,7 +128,7 @@ export function Navbar() {
                         <p className="text-sm font-bold text-gray-900 dark:text-white">Akun Anda</p>
                         <p className="text-xs text-gray-500 truncate">{session.user.email}</p>
                       </div>
-                      
+
                       <Link
                         href={dashboardHref}
                         className="flex items-center gap-3 px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 rounded-xl transition-colors"
@@ -128,7 +136,7 @@ export function Navbar() {
                         <LayoutDashboard className="w-4 h-4" />
                         Dashboard
                       </Link>
-                      
+
                       <button
                         onClick={() => signOut()}
                         className="flex w-full items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
@@ -182,18 +190,17 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-4 py-3 text-base font-bold rounded-xl transition-all ${
-                      isActive
+                    className={`block px-4 py-3 text-base font-bold rounded-xl transition-all ${isActive
                         ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
                         : "text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800/50"
-                    }`}
+                      }`}
                   >
                     {link.label}
                   </Link>
                 </li>
               );
             })}
-            
+
             <li className="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-3">
               {session ? (
                 <>
