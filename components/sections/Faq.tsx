@@ -39,7 +39,7 @@ export function Faq() {
     <section id="faq" className="py-24 bg-white dark:bg-gray-950 relative overflow-hidden">
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent dark:via-gray-800" />
 
-      <div className="container mx-auto px-6 md:px-8 max-w-3xl">
+      <div className="container mx-auto px-6 md:px-8 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

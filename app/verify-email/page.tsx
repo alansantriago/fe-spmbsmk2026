@@ -63,7 +63,7 @@ function VerifyEmailContent() {
         <ThemeToggle />
       </div>
 
-      <main className="container mx-auto px-4 flex-1 flex items-center justify-center">
+      <main className="container mx-auto px-6 md:px-8 max-w-6xl flex-1 flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

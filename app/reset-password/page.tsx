@@ -297,7 +297,7 @@ export default function ResetPasswordPage() {
         <ThemeToggle />
       </div>
 
-      <main className="container mx-auto px-4 flex-1 flex items-center justify-center">
+      <main className="container mx-auto px-6 md:px-8 max-w-6xl flex-1 flex items-center justify-center">
         <div className="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-xl ring-1 ring-gray-100 dark:ring-gray-800">
           <Suspense
             fallback={

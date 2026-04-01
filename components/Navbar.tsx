@@ -9,9 +9,10 @@ import { User, LogOut, LayoutDashboard, ChevronDown, Menu, X } from "lucide-reac
 
 const NAV_LINKS = [
   { label: "Beranda", href: "/" },
-  { label: "Keunggulan", href: "/keunggulan" },
-  { label: "Alur", href: "/alur" },
-  { label: "Jurusan", href: "/jurusan" },
+  { label: "Pemeringkatan", href: "/pemeringkatan" },
+  { label: "Statistik", href: "/statistik" },
+  { label: "Jadwal", href: "/jadwal" },
+  { label: "Regulasi", href: "/regulasi" },
   { label: "FAQ", href: "/faq" },
 ];
 
@@ -48,7 +49,7 @@ export function Navbar() {
           : "bg-transparent py-5"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-8 max-w-6xl w-full">
+      <div className="container mx-auto px-6 md:px-8 max-w-6xl w-full">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
             <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
